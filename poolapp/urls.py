@@ -13,5 +13,5 @@ urlpatterns = [
     path('manager-2026/admin_dashboard/', views.admin_dashboard, name='admin_dashboard'),
 
     # Logout
-    path('manager-2026/admin_logout/', views.admin_logout, name='admin_logout'),
+    path("logout/", views.admin_logout, name="admin_logout")
 ]
