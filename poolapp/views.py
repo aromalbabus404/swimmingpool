@@ -29,7 +29,7 @@ def admin_login(request):
 
 @login_required(login_url='admin_login')
 def admin_dashboard(request):
-    return render(request, 'admin.html')
+    return render(request, 'admin_dashboard.html')
 
 
 def admin_logout(request):
