@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }}</title>
+
+    {% load static %}
+
+    <style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:#f5f7fa;
+    color:#333;
+}
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+}
+
+.product-section{
+    padding:60px 0;
+}
+
+.product-wrapper{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    align-items:center;
+}
+
+.product-image img{
+    width:100%;
+    border-radius:12px;
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+
+.product-info h1{
+    font-size:40px;
+    margin-bottom:20px;
+    color:#009688;
+}
+
+.price{
+    font-size:30px;
+    color:#ff5722;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+.description{
+    line-height:1.8;
+    color:#555;
+    margin-bottom:30px;
+}
+
+.buttons{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    display:inline-block;
+    padding:14px 24px;
+    border-radius:6px;
+    color:#fff;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.whatsapp{
+    background:#25D366;
+}
+
+.whatsapp:hover{
+    background:#1ea952;
+}
+
+.back{
+    background:#009688;
+}
+
+.back:hover{
+    background:#00796B;
+}
+
+.related{
+    padding:70px 0;
+}
+
+.related h2{
+    text-align:center;
+    margin-bottom:40px;
+    font-size:34px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:#fff;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 8px 20px rgba(0,0,0,.1);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.card-content{
+    padding:20px;
+}
+
+.card h3{
+    margin-bottom:10px;
+    color:#009688;
+}
+
+.card p{
+    color:#666;
+    margin-bottom:15px;
+}
+
+.card-price{
+    color:#ff5722;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.card a{
+    display:inline-block;
+    background:#009688;
+    color:#fff;
+    padding:10px 18px;
+    border-radius:5px;
+    text-decoration:none;
+}
+
+.card a:hover{
+    background:#00796B;
+}
+
+footer{
+    margin-top:50px;
+    background:#222;
+    color:#fff;
+    text-align:center;
+    padding:20px;
+}
+
+@media(max-width:900px){
+
+.product-wrapper{
+    grid-template-columns:1fr;
+}
+
+.product-info h1{
+    font-size:32px;
+}
+
+}
+
+    </style>
+
+</head>
+<body>
+
+<section class="product-section">
+
+<div class="container">
+
+<div class="product-wrapper">
+
+<div class="product-image">
+
+{% if product.image %}
+<img src="{{ product.image.url }}" alt="{{ product.name }}">
+{% else %}
+<img src="{% static 'images/no-image.png' %}" alt="No Image">
+{% endif %}
+
+</div>
+
+<div class="product-info">
+
+<h1>{{ product.name }}</h1>
+
+<div class="price">
+₹{{ product.display_price }}
+</div>
+
+<div class="description">
+{{ product.description|linebreaks }}
+</div>
+
+<div class="buttons">
+
+<a href="{{ whatsapp_link }}" target="_blank" class="btn whatsapp">
+Order on WhatsApp
+</a>
+
+<a href="{% url 'product_list' %}" class="btn back">
+Back to Products
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="related">
+
+<div class="container">
+
+<h2>Related Products</h2>
+
+<div class="grid">
+
+{% for item in related_products %}
+
+<div class="card">
+
+{% if item.image %}
+<img src="{{ item.image.url }}" alt="{{ item.name }}">
+{% else %}
+<img src="{% static 'images/no-image.png' %}" alt="">
+{% endif %}
+
+<div class="card-content">
+
+<h3>{{ item.name }}</h3>
+
+<p>
+{{ item.short_description|truncatewords:15 }}
+</p>
+
+<div class="card-price">
+₹{{ item.display_price }}
+</div>
+
+<a href="{% url 'product_detail' item.slug %}">
+View Details
+</a>
+
+</div>
+
+</div>
+
+{% empty %}
+
+<p>No related products found.</p>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+</section>
+
+<footer>
+© 2026 Swimming Pool Products. All Rights Reserved.
+</footer>
+
+<script>
+
+document.querySelector(".whatsapp").addEventListener("click",function(){
+
+console.log("Redirecting to WhatsApp...");
+
+});
+
+</script>
+
+</body>
+</html>

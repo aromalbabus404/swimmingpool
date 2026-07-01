@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+
+    {% load static %}
+
+    <style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f5f7fa;
+}
+
+header{
+    background:#009688;
+    color:#fff;
+    text-align:center;
+    padding:50px 20px;
+}
+
+header h1{
+    font-size:42px;
+}
+
+header p{
+    margin-top:10px;
+    font-size:18px;
+}
+
+.container{
+    width:90%;
+    max-width:1100px;
+    margin:60px auto;
+}
+
+.contact-box{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+}
+
+.contact-info,
+.contact-form{
+    background:#fff;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 8px 20px rgba(0,0,0,.1);
+}
+
+.contact-info h2,
+.contact-form h2{
+    color:#009688;
+    margin-bottom:20px;
+}
+
+.contact-info p{
+    margin-bottom:15px;
+    color:#555;
+    line-height:1.7;
+}
+
+.contact-form input,
+.contact-form textarea{
+    width:100%;
+    padding:14px;
+    margin-bottom:20px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    outline:none;
+}
+
+.contact-form textarea{
+    resize:none;
+    height:150px;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    border:none;
+    background:#009688;
+    color:#fff;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+button:hover{
+    background:#00796B;
+}
+
+.whatsapp-btn{
+    display:inline-block;
+    margin-top:20px;
+    background:#25D366;
+    color:#fff;
+    padding:14px 22px;
+    border-radius:6px;
+    text-decoration:none;
+}
+
+.whatsapp-btn:hover{
+    background:#1EA952;
+}
+
+footer{
+    margin-top:60px;
+    background:#222;
+    color:#fff;
+    text-align:center;
+    padding:20px;
+}
+
+@media(max-width:768px){
+
+.contact-box{
+    grid-template-columns:1fr;
+}
+
+header h1{
+    font-size:32px;
+}
+
+}
+
+    </style>
+
+</head>
+<body>
+
+<header>
+
+<h1>Contact Us</h1>
+
+<p>We're here to help with your swimming pool needs.</p>
+
+</header>
+
+<div class="container">
+
+<div class="contact-box">
+
+<div class="contact-info">
+
+<h2>Get in Touch</h2>
+
+<p><strong>Address:</strong> Your Company Address</p>
+
+<p><strong>Phone:</strong> +91 98765 43210</p>
+
+<p><strong>Email:</strong> info@example.com</p>
+
+<p>
+Feel free to contact us for swimming pool construction,
+maintenance, accessories, and consultation.
+</p>
+
+<a href="{{ whatsapp_link }}" target="_blank" class="whatsapp-btn">
+Chat on WhatsApp
+</a>
+
+</div>
+
+<div class="contact-form">
+
+<h2>Send a Message</h2>
+
+<form id="contactForm">
+
+<input
+type="text"
+id="name"
+placeholder="Your Name"
+required>
+
+<input
+type="email"
+id="email"
+placeholder="Your Email"
+required>
+
+<input
+type="text"
+id="subject"
+placeholder="Subject"
+required>
+
+<textarea
+id="message"
+placeholder="Your Message"
+required></textarea>
+
+<button type="submit">
+Send Message
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+<footer>
+
+<p>
+© 2026 Swimming Pool Company. All Rights Reserved.
+</p>
+
+</footer>
+
+<script>
+
+document.getElementById("contactForm").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+let name=document.getElementById("name").value.trim();
+let email=document.getElementById("email").value.trim();
+let subject=document.getElementById("subject").value.trim();
+let message=document.getElementById("message").value.trim();
+
+if(name=="" || email=="" || subject=="" || message==""){
+
+alert("Please fill in all fields.");
+
+return;
+
+}
+
+alert("Thank you! Your message has been submitted.");
+
+this.reset();
+
+});
+
+</script>
+
+</body>
+</html>

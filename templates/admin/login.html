@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+
+    {% load static %}
+
+    <style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#009688,#004D40);
+}
+
+.login-container{
+    width:400px;
+    background:#fff;
+    padding:40px;
+    border-radius:12px;
+    box-shadow:0 15px 40px rgba(0,0,0,.2);
+}
+
+.login-container h2{
+    text-align:center;
+    color:#009688;
+    margin-bottom:30px;
+}
+
+.input-group{
+    margin-bottom:20px;
+}
+
+.input-group label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:bold;
+}
+
+.input-group input{
+    width:100%;
+    padding:14px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    outline:none;
+    transition:.3s;
+}
+
+.input-group input:focus{
+    border-color:#009688;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    border:none;
+    background:#009688;
+    color:#fff;
+    font-size:16px;
+    border-radius:6px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:#00796B;
+}
+
+.error{
+    background:#ffebee;
+    color:#d32f2f;
+    padding:12px;
+    border-radius:6px;
+    margin-bottom:20px;
+    text-align:center;
+}
+
+@media(max-width:500px){
+
+.login-container{
+    width:90%;
+    padding:30px;
+}
+
+}
+
+    </style>
+
+</head>
+<body>
+
+<div class="login-container">
+
+<h2>Administrator Login</h2>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="error">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<form method="POST">
+
+{% csrf_token %}
+
+<div class="input-group">
+<label>Username</label>
+<input
+type="text"
+name="username"
+placeholder="Enter Username"
+required>
+</div>
+
+<div class="input-group">
+<label>Password</label>
+<input
+type="password"
+name="password"
+id="password"
+placeholder="Enter Password"
+required>
+</div>
+
+<div style="margin-bottom:20px;">
+<input type="checkbox" id="showPassword">
+<label for="showPassword"> Show Password</label>
+</div>
+
+<button type="submit">
+Login
+</button>
+
+</form>
+
+</div>
+
+<script>
+
+const password=document.getElementById("password");
+const checkbox=document.getElementById("showPassword");
+
+checkbox.addEventListener("change",function(){
+
+if(this.checked){
+
+password.type="text";
+
+}else{
+
+password.type="password";
+
+}
+
+});
+
+</script>
+
+</body>
+</html>

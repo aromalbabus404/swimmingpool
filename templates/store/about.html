@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+
+    {% load static %}
+
+    <style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f5f7fa;
+    color:#333;
+    line-height:1.6;
+}
+
+header{
+    background:#009688;
+    color:#fff;
+    text-align:center;
+    padding:60px 20px;
+}
+
+header h1{
+    font-size:42px;
+}
+
+header p{
+    margin-top:10px;
+    font-size:18px;
+}
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:60px auto;
+}
+
+/* About Section */
+
+.about-section{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    align-items:center;
+    margin-bottom:70px;
+}
+
+.about-image img{
+    width:100%;
+    border-radius:12px;
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+
+.about-content h2{
+    color:#009688;
+    font-size:34px;
+    margin-bottom:20px;
+}
+
+.about-content p{
+    margin-bottom:15px;
+    color:#555;
+}
+
+/* Features */
+
+.features{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+    margin-bottom:70px;
+}
+
+.feature-box{
+    background:#fff;
+    padding:30px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,.1);
+    transition:.3s;
+}
+
+.feature-box:hover{
+    transform:translateY(-8px);
+}
+
+.feature-box h3{
+    color:#009688;
+    margin-bottom:15px;
+}
+
+/* Testimonials */
+
+.testimonials{
+    margin-top:40px;
+}
+
+.testimonials h2{
+    text-align:center;
+    color:#009688;
+    margin-bottom:40px;
+    font-size:34px;
+}
+
+.testimonial-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:25px;
+}
+
+.testimonial-card{
+    background:#fff;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 8px 20px rgba(0,0,0,.1);
+}
+
+.testimonial-card h3{
+    color:#009688;
+    margin-bottom:10px;
+}
+
+.testimonial-card p{
+    color:#666;
+}
+
+footer{
+    background:#222;
+    color:#fff;
+    text-align:center;
+    padding:20px;
+    margin-top:60px;
+}
+
+@media(max-width:768px){
+
+.about-section{
+    grid-template-columns:1fr;
+}
+
+header h1{
+    font-size:32px;
+}
+
+.about-content h2{
+    font-size:28px;
+}
+
+}
+
+    </style>
+
+</head>
+<body>
+
+<header>
+
+<h1>About Us</h1>
+
+<p>Professional Swimming Pool Construction & Maintenance</p>
+
+</header>
+
+<div class="container">
+
+<section class="about-section">
+
+<div class="about-image">
+
+<img src="{% static 'images/about.jpg' %}" alt="About">
+
+</div>
+
+<div class="about-content">
+
+<h2>Who We Are</h2>
+
+<p>
+We specialize in designing, constructing, renovating, and maintaining
+premium swimming pools for homes, resorts, villas, hotels, and commercial projects.
+</p>
+
+<p>
+Our experienced team delivers high-quality workmanship using modern
+technology and premium materials to create beautiful and durable swimming pools.
+</p>
+
+<p>
+Customer satisfaction, quality service, and innovative designs are our top priorities.
+</p>
+
+</div>
+
+</section>
+
+<section class="features">
+
+<div class="feature-box">
+
+<h3>🏊 Pool Construction</h3>
+
+<p>
+Custom-designed swimming pools with premium quality materials.
+</p>
+
+</div>
+
+<div class="feature-box">
+
+<h3>🛠 Maintenance</h3>
+
+<p>
+Professional cleaning, servicing, and water treatment.
+</p>
+
+</div>
+
+<div class="feature-box">
+
+<h3>💡 Accessories</h3>
+
+<p>
+Pool lights, pumps, filters, ladders, and safety equipment.
+</p>
+
+</div>
+
+<div class="feature-box">
+
+<h3>⭐ Experience</h3>
+
+<p>
+Years of expertise delivering high-quality swimming pool solutions.
+</p>
+
+</div>
+
+</section>
+
+<section class="testimonials">
+
+<h2>Customer Testimonials</h2>
+
+<div class="testimonial-grid">
+
+{% for testimonial in testimonials %}
+
+<div class="testimonial-card">
+
+<h3>{{ testimonial.name }}</h3>
+
+<p>
+{{ testimonial.message }}
+</p>
+
+</div>
+
+{% empty %}
+
+<p>No testimonials available.</p>
+
+{% endfor %}
+
+</div>
+
+</section>
+
+</div>
+
+<footer>
+
+<p>
+© 2026 Swimming Pool Company. All Rights Reserved.
+</p>
+
+</footer>
+
+<script>
+
+// Fade-in animation
+
+const cards=document.querySelectorAll(".feature-box,.testimonial-card");
+
+const observer=new IntersectionObserver(entries=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+entry.target.style.opacity="1";
+entry.target.style.transform="translateY(0)";
+
+}
+
+});
+
+});
+
+cards.forEach(card=>{
+
+card.style.opacity="0";
+card.style.transform="translateY(40px)";
+card.style.transition="0.6s";
+
+observer.observe(card);
+
+});
+
+</script>
+
+</body>
+</html>

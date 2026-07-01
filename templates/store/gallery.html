@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+
+    {% load static %}
+
+    <style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f5f7fa;
+}
+
+header{
+    background:#009688;
+    color:#fff;
+    text-align:center;
+    padding:40px 20px;
+}
+
+header h1{
+    font-size:42px;
+}
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:60px auto;
+}
+
+.gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:25px;
+}
+
+.gallery-item{
+    background:#fff;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 8px 20px rgba(0,0,0,.1);
+    cursor:pointer;
+    transition:.3s;
+}
+
+.gallery-item:hover{
+    transform:translateY(-8px);
+}
+
+.gallery-item img{
+    width:100%;
+    height:250px;
+    object-fit:cover;
+    transition:.4s;
+}
+
+.gallery-item:hover img{
+    transform:scale(1.08);
+}
+
+.gallery-content{
+    padding:18px;
+}
+
+.gallery-content h3{
+    color:#009688;
+    margin-bottom:10px;
+}
+
+.gallery-content p{
+    color:#666;
+    font-size:15px;
+}
+
+.empty{
+    text-align:center;
+    font-size:22px;
+    color:#777;
+    margin-top:40px;
+}
+
+/* Lightbox */
+
+.lightbox{
+    position:fixed;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.9);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+.lightbox img{
+    max-width:90%;
+    max-height:90%;
+    border-radius:10px;
+}
+
+.close{
+    position:absolute;
+    top:25px;
+    right:35px;
+    font-size:40px;
+    color:#fff;
+    cursor:pointer;
+}
+
+footer{
+    background:#222;
+    color:#fff;
+    text-align:center;
+    padding:20px;
+    margin-top:60px;
+}
+
+@media(max-width:768px){
+
+header h1{
+    font-size:32px;
+}
+
+.gallery-item img{
+    height:220px;
+}
+
+}
+
+    </style>
+
+</head>
+<body>
+
+<header>
+
+<h1>Gallery</h1>
+
+<p>Our Swimming Pool Projects & Accessories</p>
+
+</header>
+
+<div class="container">
+
+<div class="gallery-grid">
+
+{% for image in images %}
+
+<div class="gallery-item">
+
+{% if image.image %}
+<img src="{{ image.image.url }}" alt="{{ image.title }}">
+{% else %}
+<img src="{% static 'images/no-image.png' %}" alt="">
+{% endif %}
+
+<div class="gallery-content">
+
+<h3>{{ image.title }}</h3>
+
+<p>{{ image.description|default:"Swimming Pool Project" }}</p>
+
+</div>
+
+</div>
+
+{% empty %}
+
+<div class="empty">
+
+No Gallery Images Available.
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+<div class="lightbox" id="lightbox">
+
+<span class="close">&times;</span>
+
+<img id="lightbox-img" src="" alt="">
+
+</div>
+
+<footer>
+
+© 2026 Swimming Pool Gallery. All Rights Reserved.
+
+</footer>
+
+<script>
+
+const galleryImages=document.querySelectorAll(".gallery-item img");
+
+const lightbox=document.getElementById("lightbox");
+
+const lightboxImg=document.getElementById("lightbox-img");
+
+const close=document.querySelector(".close");
+
+galleryImages.forEach(function(img){
+
+img.addEventListener("click",function(){
+
+lightbox.style.display="flex";
+
+lightboxImg.src=this.src;
+
+});
+
+});
+
+close.addEventListener("click",function(){
+
+lightbox.style.display="none";
+
+});
+
+lightbox.addEventListener("click",function(e){
+
+if(e.target===lightbox){
+
+lightbox.style.display="none";
+
+}
+
+});
+
+</script>
+
+</body>
+</html>

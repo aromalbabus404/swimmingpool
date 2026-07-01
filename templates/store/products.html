@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Products</title>
+
+    {% load static %}
+
+    <style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f5f7fa;
+}
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+}
+
+header{
+    background:#009688;
+    color:#fff;
+    text-align:center;
+    padding:40px;
+}
+
+header h1{
+    font-size:40px;
+}
+
+.search-box{
+    margin:40px 0;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.search-box input,
+.search-box select{
+    flex:1;
+    min-width:200px;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:6px;
+}
+
+.search-box button{
+    padding:12px 25px;
+    border:none;
+    background:#009688;
+    color:#fff;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.search-box button:hover{
+    background:#00796B;
+}
+
+.products-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:25px;
+    margin-bottom:50px;
+}
+
+.card{
+    background:#fff;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 8px 20px rgba(0,0,0,.1);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.card-content{
+    padding:20px;
+}
+
+.card h3{
+    margin-bottom:10px;
+    color:#009688;
+}
+
+.card p{
+    color:#666;
+    margin-bottom:15px;
+}
+
+.price{
+    font-size:22px;
+    color:#ff5722;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.btn{
+    display:inline-block;
+    background:#009688;
+    color:#fff;
+    padding:10px 18px;
+    border-radius:6px;
+    text-decoration:none;
+}
+
+.btn:hover{
+    background:#00796B;
+}
+
+.pagination{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin:40px 0;
+}
+
+.pagination a,
+.pagination span{
+    padding:10px 15px;
+    border-radius:5px;
+    text-decoration:none;
+    background:#eee;
+    color:#333;
+}
+
+.pagination .active{
+    background:#009688;
+    color:#fff;
+}
+
+footer{
+    margin-top:60px;
+    background:#222;
+    color:#fff;
+    text-align:center;
+    padding:20px;
+}
+
+@media(max-width:768px){
+
+header h1{
+    font-size:32px;
+}
+
+}
+
+    </style>
+
+</head>
+<body>
+
+<header>
+    <h1>Our Products</h1>
+</header>
+
+<div class="container">
+
+<form method="GET" class="search-box">
+
+<input
+type="text"
+name="q"
+placeholder="Search products..."
+value="{{ query }}">
+
+<select name="category">
+
+<option value="">All Categories</option>
+
+{% for category in categories %}
+
+<option
+value="{{ category.slug }}"
+{% if active_category == category.slug %}selected{% endif %}>
+{{ category.name }}
+</option>
+
+{% endfor %}
+
+</select>
+
+<button type="submit">
+Search
+</button>
+
+</form>
+
+<div class="products-grid">
+
+{% for product in page_obj %}
+
+<div class="card">
+
+{% if product.image %}
+<img src="{{ product.image.url }}" alt="{{ product.name }}">
+{% else %}
+<img src="{% static 'images/no-image.png' %}" alt="">
+{% endif %}
+
+<div class="card-content">
+
+<h3>{{ product.name }}</h3>
+
+<p>
+{{ product.short_description|truncatewords:18 }}
+</p>
+
+{% if product.price %}
+<div class="price">
+₹{{ product.price }}
+</div>
+{% endif %}
+
+<a href="{% url 'product_detail' product.slug %}" class="btn">
+View Details
+</a>
+
+</div>
+
+</div>
+
+{% empty %}
+
+<h2>No Products Found.</h2>
+
+{% endfor %}
+
+</div>
+
+<div class="pagination">
+
+{% if page_obj.has_previous %}
+
+<a href="?page={{ page_obj.previous_page_number }}{% if active_category %}&category={{ active_category }}{% endif %}{% if query %}&q={{ query }}{% endif %}">
+Previous
+</a>
+
+{% endif %}
+
+<span class="active">
+{{ page_obj.number }}
+</span>
+
+{% if page_obj.has_next %}
+
+<a href="?page={{ page_obj.next_page_number }}{% if active_category %}&category={{ active_category }}{% endif %}{% if query %}&q={{ query }}{% endif %}">
+Next
+</a>
+
+{% endif %}
+
+</div>
+
+</div>
+
+<footer>
+© 2026 Swimming Pool Products. All Rights Reserved.
+</footer>
+
+<script>
+
+const searchInput=document.querySelector("input[name='q']");
+
+searchInput.addEventListener("keyup",function(){
+
+console.log("Searching:",this.value);
+
+});
+
+</script>
+
+</body>
+</html>

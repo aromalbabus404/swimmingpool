@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            color: #333;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: #111827;
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 20px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #22c55e;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: #22c55e;
+            color: black;
+        }
+
+        /* Main content */
+        .main {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+        /* Cards */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .card h2 {
+            font-size: 28px;
+            color: #111827;
+        }
+
+        /* Colors */
+        .green { border-left: 5px solid #22c55e; }
+        .blue { border-left: 5px solid #3b82f6; }
+        .yellow { border-left: 5px solid #facc15; }
+        .red { border-left: 5px solid #ef4444; }
+
+        /* Responsive */
+        @media(max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <h2>POOL ADMIN</h2>
+
+    <a href="#">Dashboard</a>
+    <a href="#">Products</a>
+    <a href="#">Services</a>
+    <a href="#">Gallery</a>
+    <a href="#">Testimonials</a>
+    <a href="#">Settings</a>
+    <a href="{% url 'admin_logout' %}">Logout</a>
+</div>
+
+<!-- Main -->
+<div class="main">
+
+    <div class="header">
+        <h1>Dashboard Overview</h1>
+    </div>
+
+    <!-- Cards -->
+    <div class="cards">
+
+        <div class="card green">
+            <h3>Total Products</h3>
+            <h2>{{ total_products }}</h2>
+        </div>
+
+        <div class="card blue">
+            <h3>Total Services</h3>
+            <h2>{{ total_services }}</h2>
+        </div>
+
+        <div class="card yellow">
+            <h3>Total Gallery</h3>
+            <h2>{{ total_gallery }}</h2>
+        </div>
+
+        <div class="card red">
+            <h3>Total Testimonials</h3>
+            <h2>{{ total_testimonials }}</h2>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    // Simple animation counter effect
+    const counters = document.querySelectorAll("h2");
+
+    counters.forEach(counter => {
+        let target = +counter.innerText;
+        let count = 0;
+
+        let speed = target / 50;
+
+        let interval = setInterval(() => {
+            count += speed;
+            if (count >= target) {
+                counter.innerText = target;
+                clearInterval(interval);
+            } else {
+                counter.innerText = Math.floor(count);
+            }
+        }, 20);
+    });
+</script>
+
+</body>
+</html>
