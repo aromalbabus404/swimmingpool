@@ -37,5 +37,5 @@ def admin_logout(request):
     return redirect('admin_login')
 
 
-def storefront(request):
+def index(request):
     return render(request, 'index.html')
