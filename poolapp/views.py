@@ -1,50 +1,41 @@
-from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
-
-def index(request):
-    return render(request, "index.html")
+from django.contrib import messages
+from django.shortcuts import render, redirect
 
 
 def admin_login(request):
-
+    # If already logged in, go straight to dashboard
     if request.user.is_authenticated:
-        return redirect("admin_dashboard")
+        return redirect('admin_dashboard')
 
-    if request.method == "POST":
+    if request.method == 'POST':
+        username = request.POST.get('username', '').strip()
+        password = request.POST.get('password', '')
 
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-
-        user = authenticate(
-            request,
-            username=username,
-            password=password
-        )
+        user = authenticate(request, username=username, password=password)
 
         if user is not None:
-
-            login(request, user)
-
-            return redirect("admin_dashboard")
-
+            if user.is_staff or user.is_superuser:
+                login(request, user)
+                return redirect('admin_dashboard')
+            else:
+                messages.error(request, 'You do not have admin access.')
         else:
+            messages.error(request, 'Invalid username or password.')
 
-            messages.error(request, "Invalid Username or Password")
-
-    return render(request, "admin_login.html")
+    return render(request, 'admin_login.html')
 
 
-@login_required(login_url="admin_login")
+@login_required(login_url='admin_login')
 def admin_dashboard(request):
+    return render(request, 'admin.html')
 
-    return render(request, "admin_dashboard.html")
 
-
-def logout_view(request):
-
+def admin_logout(request):
     logout(request)
+    return redirect('admin_login')
 
-    return redirect("admin_login")
+
+def storefront(request):
+    return render(request, 'index.html')
